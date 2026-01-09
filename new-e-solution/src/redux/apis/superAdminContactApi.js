@@ -4,7 +4,7 @@ export const superAdminContactApi = createApi({
   reducerPath: "superAdminContactApi",
 
   baseQuery: fetchBaseQuery({
-       baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/superadmincontact" || "/api",
+       baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadmincontact" )|| "/api",
     credentials: "include", 
     
   }),

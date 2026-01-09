@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const superAdminServicesApi = createApi({
   reducerPath: "superAdminServicesApi",
   baseQuery: fetchBaseQuery({
-      baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/superadminservices" || "/api",
+      baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadminservices" )|| "/api",
     credentials: "include",
   }),
   tagTypes: ["SuperServices", "PublicServices"],

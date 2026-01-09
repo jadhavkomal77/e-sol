@@ -4,7 +4,7 @@ export const paymentApi = createApi({
   reducerPath: "paymentApi",
 
   baseQuery: fetchBaseQuery({
-         baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/payment" || "/api",
+         baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/payment") || "/api",
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("adminToken");

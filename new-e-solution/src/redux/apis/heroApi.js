@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const heroApi = createApi({
   reducerPath: "heroApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/hero" || "/api",
+    baseUrl:( import.meta.env.VITE_BACKEND_URL + "/api/hero") || "/api",
     credentials: "include", 
   }),
   tagTypes: ["Hero"],

@@ -7,7 +7,7 @@ export const adminApi = createApi({
 
   baseQuery: fetchBaseQuery({
 
-     baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/admin" || "/api",
+     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/admin") || "/api",
     credentials: "include",
 
     prepareHeaders: (headers, { getState, endpoint }) => {

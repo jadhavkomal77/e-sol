@@ -5,7 +5,7 @@ export const activityApi = createApi({
 
   baseQuery: fetchBaseQuery({
 
-     baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/logs" || "/api",
+     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/logs") || "/api",
     credentials: "include",
   }),
 

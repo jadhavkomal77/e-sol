@@ -5,7 +5,7 @@ export const footerApi = createApi({
   reducerPath: "footerApi",
 
   baseQuery: fetchBaseQuery({  
-     baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/footer" || "/api",
+     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/footer" )|| "/api",
     credentials: "include",
   }),
 

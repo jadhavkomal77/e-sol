@@ -6,7 +6,7 @@ export const superAdminApi = createApi({
   reducerPath: "superAdminApi",
 
   baseQuery: fetchBaseQuery({
-       baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/superadmin" || "/api",
+       baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadmin" )|| "/api",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
   const token = getState().superadmin?.token;

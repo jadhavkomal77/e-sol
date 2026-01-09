@@ -4,7 +4,7 @@ export const superAdminNavbarApi = createApi({
   reducerPath: "superAdminNavbarApi",
 
   baseQuery: fetchBaseQuery({
-     baseUrl: import.meta.env.VITE_BACKEND_URL + "/api/superadminnavbar" || "/api",
+     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadminnavbar") || "/api",
     credentials: "include",
   }),
 
