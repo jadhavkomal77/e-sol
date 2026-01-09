@@ -349,7 +349,7 @@ const SuperAdminAbout = lazy(() => import("./superadmin/SuperAdminAbout"));
 const SuperAdminServices = lazy(() => import("./superadmin/SuperAdminServices"));
 const SuperAdminProductsPublic = lazy(() => import("./superadmin/SuperAdminProductsPublic"));
 const SuperAdminPublicFeedback = lazy(() => import("./superadmin/SuperAdminPublicFeedback"));
-const SuperAdminPayment = lazy(() => import("./superadmin/superAdminPayment"));
+// const SuperAdminPayment = lazy(() => import("./superadmin/superAdminPayment"));
 const SuperAdminContact = lazy(() => import("./superadmin/SuperAdminContact"));
 const SuperAdminServiceDetail = lazy(() => import("./superadmin/SuperAdminServiceDetail"));
 const SuperAdminEnquiry = lazy(() => import("./superadmin/SuperAdminEnquiry"));
@@ -394,7 +394,7 @@ function AppContent() {
                   <SuperAdminServices />
                   <SuperAdminProductsPublic />
                   <SuperAdminPublicFeedback />
-                  <SuperAdminPayment />
+                  {/* <SuperAdminPayment /> */}
                   <SuperAdminContact />
                 </>
               </RouteWrapper>
