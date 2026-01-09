@@ -6,7 +6,7 @@ export const superAdminNavbarApi = createApi({
   baseQuery: fetchBaseQuery({
      baseUrl: import.meta.env.VITE_BACKEND_URL
      ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminnavbar") 
-     : "/api",
+     : "/api/superadminnavbar",
     credentials: "include",
   }),
 

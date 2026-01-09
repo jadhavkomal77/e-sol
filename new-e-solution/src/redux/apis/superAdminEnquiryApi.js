@@ -4,7 +4,9 @@ export const superAdminEnquiryApi = createApi({
   reducerPath: "superAdminEnquiryApi",
 
   baseQuery: fetchBaseQuery({
-       baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadminenquiry" )|| "/api",
+         baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminenquiry") 
+     : "/api/superadminenquiry",
     credentials: "include",
   }),
 

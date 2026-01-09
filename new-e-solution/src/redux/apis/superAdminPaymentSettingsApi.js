@@ -3,7 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const superAdminPaymentSettingsApi = createApi({
   reducerPath: "superAdminPaymentSettingsApi",
   baseQuery: fetchBaseQuery({
-      baseUrl:( import.meta.env.VITE_BACKEND_URL + "/api/superadminpaymentsetting") || "/api",
+       baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminpaymentsetting") 
+     : "/api/superadminpaymentsetting",
     credentials: "include",
   }),
   tagTypes: ["PaymentSettings"],

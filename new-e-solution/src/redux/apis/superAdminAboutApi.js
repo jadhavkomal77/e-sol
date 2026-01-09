@@ -3,7 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const superAdminAboutApi = createApi({
   reducerPath: "superAdminAboutApi",
   baseQuery: fetchBaseQuery({
-       baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superabout" )|| "/api",
+       baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/superabout") 
+     : "/api/superabout",
     credentials: "include",
   }),
   tagTypes: ["SuperAbout", "PublicAbout"],

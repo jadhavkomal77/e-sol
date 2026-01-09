@@ -4,7 +4,9 @@ export const superAdminFooterApi = createApi({
   reducerPath: "superAdminFooterApi",
   baseQuery: fetchBaseQuery({
 
-     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadminfooter") || "/api",
+      baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminfooter") 
+     : "/api/superadminfooter",
     credentials: "include",
   }),
   tagTypes: ["SuperAdminFooter"],

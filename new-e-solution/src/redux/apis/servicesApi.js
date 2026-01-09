@@ -6,7 +6,9 @@ export const servicesApi = createApi({
   reducerPath: "servicesApi",
 
   baseQuery: fetchBaseQuery({
-       baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/services") || "/api",
+        baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/services") 
+     : "/api/services",
     credentials: "include", // ⭐⭐⭐ MUST
   }),
 

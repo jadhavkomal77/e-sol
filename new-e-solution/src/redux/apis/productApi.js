@@ -5,7 +5,9 @@ export const productApi = createApi({
   reducerPath: "productApi",
 
   baseQuery: fetchBaseQuery({
-   baseUrl:( import.meta.env.VITE_BACKEND_URL + "/api/products") || "/api",
+     baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/products") 
+     : "/api/products",
     credentials: "include",
 
     prepareHeaders: (headers, { getState, endpoint }) => {

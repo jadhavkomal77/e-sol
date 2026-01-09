@@ -4,6 +4,9 @@ export const superAdminProductApi = createApi({
   reducerPath: "superAdminProductApi",
   baseQuery: fetchBaseQuery({
       baseUrl:( import.meta.env.VITE_BACKEND_URL + "/api/superadminproducts") || "/api",
+           baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminproducts") 
+     : "/api/superadminproducts",
     credentials: "include",
   }),
   tagTypes: ["SuperProducts"],

@@ -6,7 +6,9 @@ export const superAdminPaymentApi = createApi({
   reducerPath: "superAdminPaymentApi",
 
   baseQuery: fetchBaseQuery({
-     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/payment") || "/api",
+       baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/payment") 
+     : "/api/payment",
     credentials: "include",
   }),
 

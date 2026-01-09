@@ -6,7 +6,9 @@ export const enquiryApi = createApi({
 
   baseQuery: fetchBaseQuery({
 
-     baseUrl:( import.meta.env.VITE_BACKEND_URL + "/api/enquiry") || "/api",
+      baseUrl: import.meta.env.VITE_BACKEND_URL
+          ?(import.meta.env.VITE_BACKEND_URL + "/api/enquiry") 
+          : "/api/enquiry",
     credentials: "include",
 
     prepareHeaders: (headers, { getState, endpoint }) => {

@@ -4,7 +4,9 @@ export const feedbackApi = createApi({
   reducerPath: "feedbackApi",
   baseQuery: fetchBaseQuery({
  
-     baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/feedback" )|| "/api",
+     baseUrl: import.meta.env.VITE_BACKEND_URL
+          ?(import.meta.env.VITE_BACKEND_URL + "/api/feedback") 
+          : "/api/feedback",
     credentials: "include",
   }),
   tagTypes: ["Feedback"],

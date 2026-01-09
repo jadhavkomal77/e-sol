@@ -4,7 +4,9 @@ export const superAdminFeedbackApi = createApi({
   reducerPath: "superAdminFeedbackApi",
   baseQuery: fetchBaseQuery({
  
-       baseUrl: (import.meta.env.VITE_BACKEND_URL + "/api/superadminfeedback" )|| "/api",
+       baseUrl: import.meta.env.VITE_BACKEND_URL
+     ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminfeedback") 
+     : "/api/superadminfeedback",
     credentials: "include",
   }),
   tagTypes: ["SuperAdminFeedback"],
