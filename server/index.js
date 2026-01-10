@@ -81,92 +81,40 @@ app.use("/api/superadminfooter", superAdminFooterRoutes);
 app.use("/api/superadminpayment", superAdminPaymentRoutes);
 app.use("/api/superadminpaymentsetting",superAdminPaymentSettingRoutes);
 
+// app.use(express.static("upload"))
 
-//   if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
-
-//   app.get(/^(?!\/api).*/, (req, res) => {
-//     res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
-//   });
-// }
-
-// app.use((req,res) =>{
-//   res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
-// })
-
-
-
-// //   app.get(/^(?!\/api).*/, (req, res) => {
-// //     res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
-// //   });
-// // }
-// // app.use((req,res) =>{
-// // res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
-// // })
-
-// app.use((err, req, res, next) => {
-//   console.error("❌ ERROR:", err);
-//   res.status(500).json({ message: "Server Error" });
-// });
-
-
-// const PORT = process.env.PORT || 5000;
-// console.log(process.env.NODE_ENV)
-
-// mongoose
-//   .connect(process.env.MONGO_URL)
-//   .then(() => {
-//     console.log("✅ MongoDB Connected");
-//     app.listen(PORT, () =>
-//       console.log(`🚀 Server running on port ${PORT}`)
-//     );
-//   })
-//   .catch((err) => {
-//     console.error("❌ MongoDB Error:", err.message);
-//     process.exit(1);
-//   });
-
-//   export  default app
-
-
-
-
-
-/* ================= FRONTEND (VITE) ================= */
 if (process.env.NODE_ENV === "production") {
-  const distPath = path.join(__dirname, "new-e-solution", "dist");
+  app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
 
-  app.use(express.static(distPath));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
   });
 }
-
-/* ================= ERROR HANDLER ================= */
+app.use((req,res) =>{
+res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
+})
 app.use((err, req, res, next) => {
   console.error("❌ ERROR:", err);
   res.status(500).json({ message: "Server Error" });
 });
 
-/* ================= DB + SERVER ================= */
+/* =======================
+   SERVER + DB
+======================= */
 const PORT = process.env.PORT || 5000;
+console.log(process.env.NODE_ENV)
 
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("✅ MongoDB Connected");
-
-    
-    if (process.env.NODE_ENV !== "production") {
-      app.listen(PORT, () =>
-        console.log(`🚀 Server running on port ${PORT}`)
-      );
-    }
+    app.listen(PORT, () =>
+      console.log(`🚀 Server running on port ${PORT}`)
+    );
   })
   .catch((err) => {
     console.error("❌ MongoDB Error:", err.message);
     process.exit(1);
   });
 
-export default app;
+  export  default app
