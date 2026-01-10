@@ -87,7 +87,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
 
   app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+    res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
   });
 }
 app.use((req,res) =>{
