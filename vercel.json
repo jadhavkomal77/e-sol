@@ -20,7 +20,8 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/new-e-solution/$1"
+            "dest": "/new-e-solution/dist/index.html"
         }
     ]
+
 }
