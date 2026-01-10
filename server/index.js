@@ -90,8 +90,9 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "dist", "index.html"));
   });
 }
-
-
+app.use((req,res) =>{
+res.sendFile(path.join(__dirname, "dist", "index.html"));
+})
 app.use((err, req, res, next) => {
   console.error("❌ ERROR:", err);
   res.status(500).json({ message: "Server Error" });
