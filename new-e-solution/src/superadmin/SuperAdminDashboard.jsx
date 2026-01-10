@@ -47,7 +47,7 @@ const menu = [
  { name: "Contacts", path: "/superadminDash/superadmincontacts", icon: <FaEnvelope /> },
  { name: "Footer", path: "/superadminDash/superadminfooter", icon: <FaEnvelope /> },
 
-  { name: "SuperAdminPayment", path: "/superadminDash/superadminpayment", icon: <FaEnvelope /> },
+  // { name: "SuperAdminPayment", path: "/superadminDash/superadminpayment", icon: <FaEnvelope /> },
 
 
 ];

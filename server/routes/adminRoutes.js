@@ -1,4 +1,5 @@
 
+
 import express from "express";
 import {
   adminLogin,
@@ -13,46 +14,22 @@ import {
 } from "../controllers/adminController.js";
 
 import { adminOnly, verifyToken } from "../middleware/authMiddleware.js";
-import { uploadSingle } from "../utils/upload.js";
-
-
 
 const router = express.Router();
 
-/* ================= PUBLIC ROUTES ================== */
+/* PUBLIC */
 router.post("/login", adminLogin);
 
-/* ================= PROTECTED ROUTES ================ */
+/* PROTECTED */
 router.post("/logout", verifyToken, adminOnly, adminLogout);
-
 router.get("/profile", verifyToken, adminOnly, getAdminProfile);
 
-router.put(
-  "/update-profile",
-  verifyToken,
-  adminOnly,
-  uploadSingle("profile"), // 📌 Correct field
-  updateAdminProfile
-);
-
-router.put(
-  "/change-password",
-  verifyToken,
-  adminOnly,
-  changeAdminPassword
-);
+router.put("/update-profile", verifyToken, adminOnly, updateAdminProfile);
+router.put("/change-password", verifyToken, adminOnly, changeAdminPassword);
 
 router.get("/my-products", verifyToken, adminOnly, getMyProducts);
-
-router.put(
-  "/update-product/:id",
-  verifyToken,
-  adminOnly,
-  uploadSingle("image"), // 📌 Correct
-  updateMyProduct
-);
-
-router.delete("/delete-product/:id", verifyToken, adminOnly,  deleteMyProduct);
+router.put("/update-product/:id", verifyToken, adminOnly, updateMyProduct);
+router.delete("/delete-product/:id", verifyToken, adminOnly, deleteMyProduct);
 
 router.get("/stats", verifyToken, adminOnly, getAdminStats);
 

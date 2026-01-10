@@ -1,3 +1,4 @@
+
 // import { useEffect, useState } from "react";
 // import { toast } from "react-toastify";
 // import {
@@ -6,7 +7,7 @@
 // } from "../redux/apis/paymentApi";
 
 // export default function AdminPayment() {
-//   const { data, isLoading } = useGetAdminPaymentQuery();
+//   const { data, isLoading, error } = useGetAdminPaymentQuery();
 //   const [savePayment, { isLoading: saving }] =
 //     useUpsertAdminPaymentMutation();
 
@@ -26,61 +27,61 @@
 //     isActive: true,
 //   });
 
-//   /* ===== Load existing data ===== */
+//   /* ===== Load existing payment ===== */
 //   useEffect(() => {
 //     if (data) {
-//       setForm({
-//         ...form,
+//       setForm((prev) => ({
+//         ...prev,
 //         ...data,
 //         razorpayKeySecret: "", // never prefill secret
-//       });
+//       }));
 
 //       if (data?.qrImage?.url) {
 //         setQrPreview(data.qrImage.url);
 //       }
 //     }
-//     // eslint-disable-next-line
 //   }, [data]);
 
-//   /* ===== Input handlers ===== */
+//   /* ===== Handlers ===== */
 //   const handleChange = (e) => {
 //     const { name, value, type, checked } = e.target;
-//     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+//     setForm((prev) => ({
+//       ...prev,
+//       [name]: type === "checkbox" ? checked : value,
+//     }));
 //   };
 
 //   const handleQrChange = (e) => {
 //     const file = e.target.files[0];
 //     if (!file) return;
-
 //     setQrFile(file);
 //     setQrPreview(URL.createObjectURL(file));
 //   };
 
-//   /* ===== Submit ===== */
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
 //     const formData = new FormData();
-
-//     Object.entries(form).forEach(([key, value]) => {
-//       formData.append(key, value);
-//     });
-
-//     if (qrFile) {
-//       formData.append("qrImage", qrFile);
-//     }
+//     Object.entries(form).forEach(([k, v]) => formData.append(k, v));
+//     if (qrFile) formData.append("qrImage", qrFile);
 
 //     try {
 //       await savePayment(formData).unwrap();
-//       toast.success("Payment settings saved successfully");
+//       toast.success("Payment settings saved");
 //     } catch (err) {
-//       toast.error("Failed to save payment settings");
+//       toast.error(err?.data?.message || "Save failed");
 //     }
 //   };
 
-//   if (isLoading) {
-//     return <div className="p-6">Loading payment settings...</div>;
-//   }
+//   /* ===== UI STATES ===== */
+//   if (isLoading) return <div className="p-6">Loading...</div>;
+
+//   if (error)
+//     return (
+//       <div className="p-6 text-red-600">
+//         Failed to load payment settings
+//       </div>
+//     );
 
 //   return (
 //     <div className="max-w-5xl mx-auto p-6">
@@ -92,7 +93,7 @@
 //         onSubmit={handleSubmit}
 //         className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-xl shadow"
 //       >
-//         {/* ===== LEFT ===== */}
+//         {/* LEFT */}
 //         <div className="space-y-4">
 //           <input
 //             name="businessName"
@@ -122,7 +123,7 @@
 //             name="paymentNote"
 //             value={form.paymentNote}
 //             onChange={handleChange}
-//             placeholder="Payment note (optional)"
+//             placeholder="Payment note"
 //             className="w-full border p-2 rounded"
 //           />
 
@@ -147,21 +148,17 @@
 //           </label>
 //         </div>
 
-//         {/* ===== RIGHT ===== */}
+//         {/* RIGHT */}
 //         <div className="space-y-4">
 //           <div>
-//             <label className="block mb-1 font-medium">
-//               QR Code
-//             </label>
-
+//             <label className="font-medium">QR Code</label>
 //             {qrPreview && (
 //               <img
 //                 src={qrPreview}
-//                 alt="QR Preview"
-//                 className="w-40 h-40 object-contain border rounded mb-2"
+//                 alt="QR"
+//                 className="w-36 h-36 object-contain border rounded mb-2"
 //               />
 //             )}
-
 //             <input type="file" accept="image/*" onChange={handleQrChange} />
 //           </div>
 
@@ -209,11 +206,10 @@
 //           </label>
 //         </div>
 
-//         {/* ===== ACTION ===== */}
 //         <div className="md:col-span-2">
 //           <button
 //             disabled={saving}
-//             className="w-full bg-black text-white py-2 rounded hover:opacity-90 disabled:opacity-50"
+//             className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
 //           >
 //             {saving ? "Saving..." : "Save Payment Settings"}
 //           </button>
@@ -226,8 +222,6 @@
 
 
 
-
-
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -236,11 +230,11 @@ import {
 } from "../redux/apis/paymentApi";
 
 export default function AdminPayment() {
-  const { data, isLoading, error } = useGetAdminPaymentQuery();
+  const { data, isLoading, isError } = useGetAdminPaymentQuery();
   const [savePayment, { isLoading: saving }] =
     useUpsertAdminPaymentMutation();
 
-  const [qrPreview, setQrPreview] = useState(null);
+  const [qrPreview, setQrPreview] = useState("");
   const [qrFile, setQrFile] = useState(null);
 
   const [form, setForm] = useState({
@@ -256,22 +250,31 @@ export default function AdminPayment() {
     isActive: true,
   });
 
-  /* ===== Load existing payment ===== */
+  /* ================= LOAD PAYMENT ================= */
   useEffect(() => {
-    if (data) {
-      setForm((prev) => ({
-        ...prev,
-        ...data,
-        razorpayKeySecret: "", // never prefill secret
-      }));
+    if (data?.payment) {
+      const p = data.payment;
 
-      if (data?.qrImage?.url) {
-        setQrPreview(data.qrImage.url);
+      setForm({
+        businessName: p.businessName || "",
+        paymentNote: p.paymentNote || "",
+        upiId: p.upiId || "",
+        upiName: p.upiName || "",
+        showUpi: p.showUpi ?? true,
+        showQr: p.showQr ?? true,
+        razorpayEnabled: p.razorpayEnabled ?? false,
+        razorpayKeyId: p.razorpayKeyId || "",
+        razorpayKeySecret: "", // ❌ never preload secret
+        isActive: p.isActive ?? true,
+      });
+
+      if (p.qrImage?.url) {
+        setQrPreview(p.qrImage.url);
       }
     }
   }, [data]);
 
-  /* ===== Handlers ===== */
+  /* ================= HANDLERS ================= */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({
@@ -283,40 +286,51 @@ export default function AdminPayment() {
   const handleQrChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
     setQrFile(file);
     setQrPreview(URL.createObjectURL(file));
   };
 
+  /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    Object.entries(form).forEach(([k, v]) => formData.append(k, v));
-    if (qrFile) formData.append("qrImage", qrFile);
+    const fd = new FormData();
+
+    Object.entries(form).forEach(([k, v]) =>
+      fd.append(k, v)
+    );
+
+    if (qrFile) {
+      fd.append("qrImage", qrFile); // 🔥 MUST MATCH multer
+    }
 
     try {
-      await savePayment(formData).unwrap();
-      toast.success("Payment settings saved");
+      await savePayment(fd).unwrap();
+      toast.success("✅ Payment settings saved");
     } catch (err) {
-      toast.error(err?.data?.message || "Save failed");
+      console.error(err);
+      toast.error(err?.data?.message || "❌ Save failed");
     }
   };
 
-  /* ===== UI STATES ===== */
-  if (isLoading) return <div className="p-6">Loading...</div>;
+  /* ================= STATES ================= */
+  if (isLoading)
+    return <div className="p-6">Loading payment settings...</div>;
 
-  if (error)
+  if (isError)
     return (
       <div className="p-6 text-red-600">
         Failed to load payment settings
       </div>
     );
 
+  /* ================= UI ================= */
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-6">
-        Payment Settings
-      </h1>
+      <h2 className="text-2xl font-bold mb-6">
+        💳 Payment Settings
+      </h2>
 
       <form
         onSubmit={handleSubmit}
@@ -379,16 +393,23 @@ export default function AdminPayment() {
 
         {/* RIGHT */}
         <div className="space-y-4">
+          {/* QR */}
           <div>
             <label className="font-medium">QR Code</label>
+
             {qrPreview && (
               <img
                 src={qrPreview}
-                alt="QR"
+                alt="QR Preview"
                 className="w-36 h-36 object-contain border rounded mb-2"
               />
             )}
-            <input type="file" accept="image/*" onChange={handleQrChange} />
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleQrChange}
+            />
           </div>
 
           <hr />
@@ -435,6 +456,7 @@ export default function AdminPayment() {
           </label>
         </div>
 
+        {/* SAVE */}
         <div className="md:col-span-2">
           <button
             disabled={saving}

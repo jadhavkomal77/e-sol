@@ -1,6 +1,5 @@
-import express from "express";
-import { uploadSingle } from "../../utils/upload.js"; // <-- FIXED IMPORT
 
+import express from "express";
 import {
   addSuperProduct,
   getSuperProductsPrivate,
@@ -22,8 +21,8 @@ router.get("/public/:id", getSuperSingleProductPublic);
 router.use(verifyToken, superAdminOnly);
 
 router.get("/", getSuperProductsPrivate);
-router.post("/", uploadSingle("image"), addSuperProduct);
-router.put("/:id", uploadSingle("image"), updateSuperProduct);
+router.post("/", addSuperProduct);        
+router.put("/:id", updateSuperProduct);   
 router.delete("/:id", deleteSuperProduct);
 
 export default router;

@@ -284,6 +284,18 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ErrorBoundary } from "react-error-boundary";
+import SuperAdminNavbarEditor from "./superadmin/SuperAdminNavbarEditor";
+import SuperAdminHeroEditor from "./superadmin/SuperAdminHeroEditor";
+import SuperAdminAboutEditor from "./superadmin/SuperAdminAboutEditor";
+import SuperAdminServicesEditor from "./superadmin/SuperAdminServicesEditor";
+import SuperAdminEditProduct from "./superadmin/SuperAdminEditProduct";
+import SuperAdminAddProduct from "./superadmin/SuperAdminAddProduct";
+import SuperAdminProducts from "./superadmin/SuperAdminProducts";
+import SuperAdminAllEnquiries from "./superadmin/SuperAdminAllEnquiries";
+import SuperAdminFeedbacksEditor from "./superadmin/SuperAdminFeedbacksEditor";
+import SuperAdminContactEditor from "./superadmin/SuperAdminContactEditor";
+import SuperAdminFooterEditor from "./superadmin/SuperAdminFooterEditor";
+import SuperAdminPaymentEditor from "./superadmin/SuperAdminPaymentEditor";
 
 
 function RouteWrapper({ children }) {
@@ -356,9 +368,7 @@ const SuperAdminEnquiry = lazy(() => import("./superadmin/SuperAdminEnquiry"));
 const SuperAdminPublicNavbar = lazy(() => import("./superadmin/SuperAdminPublicNavbar"));
 const SuperAdminPublicMainLayout = lazy(() => import("./layouts/SuperAdminPublicMainLayout"));
 
-/* =====================================================
-   APP CONTENT
-===================================================== */
+
 function AppContent() {
   const location = useLocation();
 
@@ -420,7 +430,6 @@ function AppContent() {
           />
         </Route>
 
-        {/* ================= SUPER ADMIN DASH ================= */}
         <Route
           path="/superadminDash"
           element={
@@ -433,6 +442,18 @@ function AppContent() {
         >
           <Route index element={<SuperAdminHome />} />
           <Route path="profile" element={<SuperAdminProfile />} />
+          <Route path="superadminnavbar" element={<SuperAdminNavbarEditor />} />
+          <Route path="superadminhero/edit" element={<SuperAdminHeroEditor />} />
+          <Route path="superadminabout" element={<SuperAdminAboutEditor />} />
+          <Route path="superadminservices" element={<SuperAdminServicesEditor />} />
+          <Route path="superadminproducts/add" element={<SuperAdminAddProduct />} />
+          <Route path="superadminproducts" element={<SuperAdminProducts />} />
+          <Route path="superadminproducts/edit/:id" element={<SuperAdminEditProduct />} />
+          <Route path="enquiries" element={<SuperAdminAllEnquiries />} />
+          <Route path="superadminfeedback" element={<SuperAdminFeedbacksEditor />} />
+          <Route path="superadmincontacts" element={<SuperAdminContactEditor />} />
+          <Route path="superadminfooter" element={<SuperAdminFooterEditor />} />
+          {/* <Route path="superadminpayment" element={<SuperAdminPaymentEditor />} /> */}
           <Route path="alladmins" element={<AdminList />} />
           <Route path="createadmin" element={<CreateAdmin />} />
           <Route path="edit-admin/:id" element={<EditAdmin />} />
@@ -490,9 +511,7 @@ function AppContent() {
   );
 }
 
-/* =====================================================
-   ROOT
-===================================================== */
+
 export default function App() {
   return (
     <Router>

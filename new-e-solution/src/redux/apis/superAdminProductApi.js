@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const superAdminProductApi = createApi({
   reducerPath: "superAdminProductApi",
   baseQuery: fetchBaseQuery({
-      baseUrl:( import.meta.env.VITE_BACKEND_URL + "/api/superadminproducts") || "/api",
            baseUrl: import.meta.env.VITE_BACKEND_URL
      ?(import.meta.env.VITE_BACKEND_URL + "/api/superadminproducts") 
      : "/api/superadminproducts",
@@ -15,6 +14,7 @@ export const superAdminProductApi = createApi({
     getSuperProductsPrivate: builder.query({
       query: () => "/",
       providesTags: ["SuperProducts"],
+        refetchOnMountOrArgChange: true, 
     }),
 
     addSuperProduct: builder.mutation({
@@ -30,8 +30,8 @@ export const superAdminProductApi = createApi({
   query: ({ id, data }) => ({
     url: `/${id}`,
     method: "PUT",
-    body: data, // FormData
-    // ❌ DO NOT add headers
+    body: data, 
+  
   }),
   invalidatesTags: ["SuperProducts"],
 }),

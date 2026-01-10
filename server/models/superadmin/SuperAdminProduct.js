@@ -15,7 +15,6 @@ const superAdminProductSchema = new mongoose.Schema(
 
     features: [{ type: String }],
 
-    // For Image Upload via Multer + Cloudinary
     image: { type: String, default: "" },
 
     status: { type: Boolean, default: true },

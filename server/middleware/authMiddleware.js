@@ -32,9 +32,7 @@ export const verifyToken = (req, res, next) => {
       expectedRole = "superadmin";
     }
 
-    // ====================
-    // 🔐 ADMIN PROTECTED ROUTES
-    // ====================
+  
     else if (
       base.includes("/api/admin") ||
       base.includes("/api/about") ||
@@ -62,20 +60,18 @@ expectedRole = "admin";
 
     }
 
-    // 🌍 Everything else = Public Route
     else {
       return next();
     }
 
-    // ⛔ Token Missing
+
     if (!token) {
       return res.status(401).json({ message: "Please Login First!" });
     }
 
-    // 🔍 Verify Token
+ 
     const decoded = jwt.verify(token, process.env.JWT_KEY);
 
-    // ⛔ Wrong Role (Security Protection)
     if (decoded.role !== expectedRole) {
       return res.status(403).json({ message: "Access Denied" });
     }
@@ -88,7 +84,6 @@ expectedRole = "admin";
   }
 };
 
-// 📌 Role-based extra layer (optional use)
 export const roleCheck = (...roles) => (req, res, next) => {
   if (!req.user || !roles.includes(req.user.role)) {
     return res.status(403).json({ message: "Access Denied" });

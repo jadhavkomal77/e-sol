@@ -5,25 +5,14 @@ import {
   updateWebsiteSettings,
 } from "../controllers/websiteSettingsController.js";
 
-import Upload from "../utils/uploadMultiple.js";
-
 const router = express.Router();
 
-// ADMIN PROTECTED ROUTES
+// 🔐 ADMIN PROTECTED ROUTES
 router.use(verifyToken, adminOnly);
 
 // GET website settings
 router.get("/", getMyWebsiteSettings);
 
-// UPDATE logo, heroImage, favicon
-router.put(
-  "/",
-  Upload.fields([
-    { name: "logo", maxCount: 1 },
-    { name: "heroImage", maxCount: 1 },
-    { name: "favicon", maxCount: 1 }
-  ]),
-  updateWebsiteSettings
-);
+router.put("/", updateWebsiteSettings);
 
 export default router;

@@ -1,9 +1,9 @@
 import WebsiteSettings from "../models/WebsiteSettings.js";
-import { uploadToCloudinary } from "../utils/cloudinaryUpload.js";
+import { v2 as cloudinary } from "cloudinary";
 import validator from "validator";
 import sanitizeHtml from "sanitize-html";
 
-/* 🛡 Helper – Clean Settings */
+/* 🛡 Clean Settings */
 const cleanSettingsData = (data) => ({
   title: sanitizeHtml(data.title || ""),
   subtitle: sanitizeHtml(data.subtitle || ""),
@@ -16,7 +16,7 @@ const cleanSettingsData = (data) => ({
 });
 
 /* =====================================================
-   1️⃣ GET WEBSITE SETTINGS (Admin)
+   1️⃣ GET WEBSITE SETTINGS
 ===================================================== */
 export const getMyWebsiteSettings = async (req, res) => {
   try {
@@ -36,34 +36,44 @@ export const getMyWebsiteSettings = async (req, res) => {
 };
 
 /* =====================================================
-   2️⃣ UPDATE WEBSITE SETTINGS (SECURE)
+   2️⃣ UPDATE WEBSITE SETTINGS (Cloudinary Only)
+   Expect Base64 strings:
+   logo, heroImage, favicon
 ===================================================== */
 export const updateWebsiteSettings = async (req, res) => {
   try {
     const adminId = req.user.id;
     let updateData = cleanSettingsData(req.body);
 
-    const uploadIfExists = async (file) => {
-      if (file && file.buffer) {
-        const uploaded = await uploadToCloudinary(
-          file.buffer,
-          "website",
-          file.originalname
-        );
-        return uploaded.secure_url;
-      }
-      return undefined;
+    // ✅ Base64 → Cloudinary helper
+    const uploadIfExists = async (base64, folder) => {
+      if (!base64) return undefined;
+      const uploaded = await cloudinary.uploader.upload(base64, {
+        folder,
+      });
+      return uploaded.secure_url;
     };
 
-    // ☁️ File uploads (optional)
-    if (req.files?.logo?.[0]) {
-      updateData.logo = await uploadIfExists(req.files.logo[0]);
+    // ☁️ Optional images (Base64)
+    if (req.body.logo) {
+      updateData.logo = await uploadIfExists(
+        req.body.logo,
+        "website/logo"
+      );
     }
-    if (req.files?.heroImage?.[0]) {
-      updateData.heroImage = await uploadIfExists(req.files.heroImage[0]);
+
+    if (req.body.heroImage) {
+      updateData.heroImage = await uploadIfExists(
+        req.body.heroImage,
+        "website/hero"
+      );
     }
-    if (req.files?.favicon?.[0]) {
-      updateData.favicon = await uploadIfExists(req.files.favicon[0]);
+
+    if (req.body.favicon) {
+      updateData.favicon = await uploadIfExists(
+        req.body.favicon,
+        "website/favicon"
+      );
     }
 
     const settings = await WebsiteSettings.findOneAndUpdate(

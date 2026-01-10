@@ -17,7 +17,7 @@ export const productApi = createApi({
       ];
 
       if (!publicEndpoints.includes(endpoint)) {
-        const token = getState().admin.token; // ✅ FIX HERE
+        const token = getState().admin.token; 
         if (token) {
           headers.set("Authorization", `Bearer ${token}`);
         }

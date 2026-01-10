@@ -1,59 +1,41 @@
-// import multer from "multer";
 
-// const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-// const fileFilter = (req, file, cb) => {
-//   allowedTypes.includes(file.mimetype)
-//     ? cb(null, true)
-//     : cb(new Error("Invalid file type. Only JPEG, JPG, PNG, and WEBP are allowed"));
-// };
 
-// const memoryStorage = multer.memoryStorage();
+// const multer = require("multer")
+// const { v4: uuid } = require("uuid")
+// const path = require("path")
 
-// export const uploadSingle = (field) => multer({
-//   storage: memoryStorage,
-//   fileFilter,
-//   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
-// }).single(field);
+// const profileStorage = multer.diskStorage({
+//     // destination: (req, file, cb) => {
+//     //     let des = "upload"
+//     //     console.log(des);
+//     //     cb(null, des)
+//     // },
+//     filename: (req, file, cb) => {
+//         const ext = path.extname(file.originalname)
+//         const fn = uuid() + ext
+//         console.log(fn);
+//         cb(null, fn)
+//     }
+// })
 
-// export const uploadMultiple = (fields) => multer({
-//   storage: memoryStorage,
-//   fileFilter,
-//   limits: { fileSize: 5 * 1024 * 1024 },
-// }).fields(fields);
+// exports.upload = multer({ storage: profileStorage }).single("imgae")
+
+
 
 
 
 import multer from "multer";
+import path from "path";
+import crypto from "crypto";
 
-const allowedTypes = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-
-const fileFilter = (req, file, cb) => {
-  if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(
-      new Error(
-        "Invalid file type. Only JPEG, JPG, PNG, and WEBP images are allowed"
-      ),
-      false
-    );
-  }
-};
-
-const storage = multer.memoryStorage();
-
-const upload = multer({
-  storage,
-  fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+const profileStorage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const fn = crypto.randomUUID() + ext;
+    cb(null, fn);
+  },
 });
 
-export const uploadSingle = (field) => upload.single(field);
-export const uploadMultiple = (fields) => upload.fields(fields);
+const upload = multer({ storage: profileStorage });
 
 export default upload;

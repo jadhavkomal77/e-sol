@@ -11,8 +11,7 @@ import { attachAdminId } from "../middleware/assignId.js";
 
 const router = express.Router();
 
-/* ================= PUBLIC ================= */
-// ⭐ slug → attachAdminId → admin resolved
+
 router.post(
   "/public/:slug",
   attachAdminId,

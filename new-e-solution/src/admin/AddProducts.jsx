@@ -14,38 +14,35 @@ const AddProduct = () => {
     price: "",
     category: "",
     features: "",
+    image: null,
   });
 
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState("");
 
-  /* ===== HANDLE INPUT ===== */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  /* ===== IMAGE ===== */
   const handleImageChange = (e) => {
-    const img = e.target.files[0];
-    setImage(img || null);
-    if (img) setPreview(URL.createObjectURL(img));
+    const file = e.target.files[0];
+    if (!file) return;
+    setFormData({ ...formData, image: file });
+    setPreview(URL.createObjectURL(file));
   };
 
-  /* ===== SUBMIT ===== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const form = new FormData();
-    form.append("name", formData.name);
-    form.append("description", formData.description);
-    form.append("price", formData.price);
-    form.append("category", formData.category);
-    form.append("features", formData.features);
-
-    if (image) form.append("image", image); // ✅ multer expects "image"
+    const fd = new FormData();
+    fd.append("name", formData.name);
+    fd.append("description", formData.description);
+    fd.append("price", formData.price);
+    fd.append("category", formData.category);
+    fd.append("features", formData.features);
+    fd.append("image", formData.image); // 🔥 MULTER KEY
 
     try {
-      await addProduct(form).unwrap();
+      await addProduct(fd).unwrap();
       toast.success("✅ Product added successfully!");
       navigate("/adminDash/adminproducts");
     } catch (err) {
@@ -61,69 +58,37 @@ const AddProduct = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            placeholder="Product name"
-            className="w-full border rounded-lg px-3 py-2"
-          />
+          <input name="name" value={formData.name} onChange={handleChange}
+            required placeholder="Product name"
+            className="w-full border rounded-lg px-3 py-2" />
 
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            placeholder="Product description"
-            className="w-full border rounded-lg px-3 py-2 h-24"
-          />
+          <textarea name="description" value={formData.description}
+            onChange={handleChange} required placeholder="Product description"
+            className="w-full border rounded-lg px-3 py-2 h-24" />
 
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-            placeholder="Price"
-            className="w-full border rounded-lg px-3 py-2"
-          />
+          <input type="number" name="price" value={formData.price}
+            onChange={handleChange} required placeholder="Price"
+            className="w-full border rounded-lg px-3 py-2" />
 
-          {/* ✅ CATEGORY = FREE TEXT */}
-          <input
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-            placeholder="Category (e.g. CCTV, Networking, Smart Devices)"
-            className="w-full border rounded-lg px-3 py-2"
-          />
+          <input name="category" value={formData.category}
+            onChange={handleChange} required placeholder="Category"
+            className="w-full border rounded-lg px-3 py-2" />
 
-          <input
-            type="text"
-            name="features"
-            value={formData.features}
+          <input name="features" value={formData.features}
             onChange={handleChange}
             placeholder="Features (comma separated)"
-            className="w-full border rounded-lg px-3 py-2"
-          />
+            className="w-full border rounded-lg px-3 py-2" />
 
-          {/* IMAGE */}
           <input
             type="file"
+            name="image"            // 🔥 IMPORTANT
             accept="image/*"
             onChange={handleImageChange}
             className="w-full border rounded-lg p-2"
           />
 
           {preview && (
-            <img
-              src={preview}
-              alt="Preview"
-              className="mt-3 h-40 object-contain border rounded-lg"
-            />
+            <img src={preview} className="h-40 object-contain border rounded-lg" />
           )}
 
           <button
@@ -140,4 +105,3 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
-
