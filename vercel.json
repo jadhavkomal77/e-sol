@@ -27,7 +27,7 @@
         [
             {
                 "source":"/(.*)",
-                "destination":"new-e-solution/dist/index.html"
+                "destination":"/new-e-solution/dist/index.html"
             }
             
 
