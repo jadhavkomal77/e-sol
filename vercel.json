@@ -22,15 +22,5 @@
             "src": "/(.*)",
             "dest": "/new-e-solution/$1"
         }
-    ],
-    "rewrites":[
-        [
-            {
-                "source":"/(.*)",
-                "destination":"/new-e-solution/dist/index.html"
-            }
-            
-
-        ]
     ]
 }
