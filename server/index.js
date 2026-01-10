@@ -84,14 +84,14 @@ app.use("/api/superadminpaymentsetting",superAdminPaymentSettingRoutes);
 // app.use(express.static("upload"))
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "dist")));
+  app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
 
   app.get(/^(?!\/api).*/, (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"));
   });
 }
 app.use((req,res) =>{
-res.sendFile(path.join(__dirname, "dist", "index.html"));
+res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
 })
 app.use((err, req, res, next) => {
   console.error("❌ ERROR:", err);
