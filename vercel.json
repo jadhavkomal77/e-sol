@@ -19,7 +19,7 @@
       "dest": "/server/index.js"
     },
     {
-      "src": "^(?!/api/).*",
+      "src": "^(?!/api).*$",
       "dest": "/new-e-solution/dist/index.html"
     }
   ]
