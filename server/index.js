@@ -81,26 +81,35 @@ app.use("/api/superadminfooter", superAdminFooterRoutes);
 app.use("/api/superadminpayment", superAdminPaymentRoutes);
 app.use("/api/superadminpaymentsetting",superAdminPaymentSettingRoutes);
 
-// app.use(express.static("upload"))
 
-if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
 
   app.get(/^(?!\/api).*/, (req, res) => {
     res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
   });
 }
+
 app.use((req,res) =>{
-res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
+  res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
 })
+
+
+
+//   app.get(/^(?!\/api).*/, (req, res) => {
+//     res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
+//   });
+// }
+// app.use((req,res) =>{
+// res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
+// })
+
 app.use((err, req, res, next) => {
   console.error("❌ ERROR:", err);
   res.status(500).json({ message: "Server Error" });
 });
 
-/* =======================
-   SERVER + DB
-======================= */
+
 const PORT = process.env.PORT || 5000;
 console.log(process.env.NODE_ENV)
 
