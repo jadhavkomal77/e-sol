@@ -1,1 +1,0 @@
-import{b as r,j as o,O as t}from"./index-DP279NKh.js";import a from"./Navbar-ajPan52k.js";import e from"./Footer-BpfOrg9t.js";function i(){const{slug:s}=r();return console.log("PUBLIC SLUG:",s),o.jsxs(o.Fragment,{children:[o.jsx(a,{slug:s}),o.jsx(t,{}),o.jsx(e,{slug:s})]})}export{i as default};
