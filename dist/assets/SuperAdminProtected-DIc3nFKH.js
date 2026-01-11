@@ -1,0 +1,1 @@
+import{aE as a,j as r,a3 as n}from"./index-D6ItWktg.js";function u({children:e}){const{data:o,isLoading:i,isError:t}=a();return i?r.jsx("div",{children:"Loading..."}):t?r.jsx(n,{to:"/superadminlogin"}):e}export{u as default};
