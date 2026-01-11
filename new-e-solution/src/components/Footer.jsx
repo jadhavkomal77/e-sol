@@ -8,6 +8,8 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+
 import { useGetPublicFooterQuery } from "../redux/apis/footerApi";
 
 const Social = ({ href, children }) => {
@@ -128,6 +130,23 @@ export default function Footer({ slug }) {
           </div>
         )}
       </div>
+      {/* ADMIN LOGIN BUTTON */}
+<div className="pb-6">
+  <Link
+    to={`/adminlogin?slug=${slug}`}
+    className="
+      inline-flex items-center justify-center
+      px-5 py-2.5 rounded-lg
+      bg-blue-600 text-white
+      text-sm font-semibold
+      hover:bg-blue-800
+      transition-all
+    "
+  >
+    Admin Login
+  </Link>
+</div>
+
     </footer>
   );
 }

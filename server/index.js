@@ -78,8 +78,8 @@ app.use("/api/superadminproducts", superAdminProductRoutes);
 app.use("/api/superadminenquiry", superAdminEnquiryRoutes);
 app.use("/api/superadminfeedback", superAdminFeedbackRoutes);
 app.use("/api/superadminfooter", superAdminFooterRoutes);
-app.use("/api/superadminpayment", superAdminPaymentRoutes);
-app.use("/api/superadminpaymentsetting",superAdminPaymentSettingRoutes);
+// app.use("/api/superadminpayment", superAdminPaymentRoutes);
+// app.use("/api/superadminpaymentsetting",superAdminPaymentSettingRoutes);
 
 // app.use(express.static("upload"))
 

@@ -7,6 +7,7 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useGetPublicSuperAdminFooterQuery } from "../redux/apis/superAdminFooterApi";
 
 /* Social Icon Wrapper */
@@ -98,6 +99,7 @@ export default function SuperAdminPublicFooter() {
           </div>
         </div>
 
+
         {/* QUICK LINKS */}
         {quickLinks.length > 0 && (
           <div>
@@ -169,6 +171,7 @@ export default function SuperAdminPublicFooter() {
           </ul>
         </div>
       </div>
+      
 
       {/* BOTTOM BAR */}
       <div className="border-t border-white/10 py-4 text-center text-sm text-gray-400">
@@ -179,6 +182,54 @@ export default function SuperAdminPublicFooter() {
           </span>
         )}
       </div>
+      {/* SUPER ADMIN LOGIN BUTTON */}
+{/* <div className=" pb-6">
+  <Link
+    to="/superadminlogin"
+    className="
+      inline-flex items-center justify-center
+      px-5 py-2.5 rounded-xl
+      bg-blue-600 hover:bg-blue-700
+      text-sm font-semibold
+      transition-all
+    "
+  >
+    Super Admin Login
+  </Link>
+</div> */}
+
+
+{/* LOGIN BUTTONS */}
+<div className="pb-8 pl-6 flex gap-3">
+  <Link
+    to="/superadminlogin"
+    className="
+      px-5 py-2.5 rounded-lg
+      bg-blue-600 text-white
+      text-sm font-semibold
+      shadow-lg shadow-blue-600/30
+      hover:bg-blue-800 hover:shadow-blue-600/40
+      transition-all
+    "
+  >
+    Super Admin
+  </Link>
+
+  <Link
+    to="/adminlogin"
+    className="
+      px-5 py-2.5 rounded-lg
+      bg-blue-600 text-white
+      text-sm font-semibold
+      shadow-lg shadow-blue-600/30
+      hover:bg-blue-800 hover:shadow-blue-600/40
+      transition-all
+    "
+  >
+    Admin
+  </Link>
+</div>
+
     </footer>
   );
 }

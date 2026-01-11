@@ -1,33 +1,73 @@
-// models/Payment.js
 import mongoose from "mongoose";
 
-const SuperAdminpaymentSchema = new mongoose.Schema({
-  orderId: String,
-  paymentId: String,
-  signature: String,
+const superAdminSchema = new mongoose.Schema(
+  {
+    /* ===== BUSINESS INFO ===== */
+    businessName: {
+      type: String,
+      trim: true,
+    },
 
-  amount: {
-    type: Number,
-    required: true,
+    paymentNote: {
+      type: String,
+      trim: true,
+      maxlength: 150,
+    },
+
+    /* ===== UPI ===== */
+    upiId: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+
+    upiName: {
+      type: String,
+      trim: true,
+    },
+
+    showUpi: {
+      type: Boolean,
+      default: true,
+    },
+
+    /* ===== QR ===== */
+    qrImage: {
+      url: String,
+      public_id: String,
+    },
+
+    showQr: {
+      type: Boolean,
+      default: true,
+    },
+
+    /* ===== RAZORPAY ===== */
+    razorpayKeyId: {
+      type: String,
+      select: false,
+    },
+
+    razorpayKeySecret: {
+      type: String,
+      select: false,
+    },
+
+    razorpayEnabled: {
+      type: Boolean,
+      default: false,
+    },
+
+    /* ===== STATUS ===== */
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
+  { timestamps: true }
+);
 
-  currency: String,
-
-  status: {
-    type: String,
-    enum: ["created", "paid", "failed"],
-    default: "created",
-  },
-
-  customer: {
-    name: String,
-    email: String,
-    phone: String,
-  },
-
-  purpose: {
-    type: String, // Website, Service, Hosting
-  },
-}, { timestamps: true });
-
-export default mongoose.model("SuperAdminpayment", SuperAdminpaymentSchema);
+export default mongoose.model(
+  "SuperAdminPayment",
+  superAdminSchema
+);

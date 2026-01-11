@@ -1,40 +1,73 @@
-// models/PaymentSettings.js
 import mongoose from "mongoose";
 
-const PaymentSettingsSchema = new mongoose.Schema({
-  provider: {
-    type: String,
-    enum: ["razorpay"],
-    default: "razorpay",
-  },
+const superAdminPaymentSettingsSchema = new mongoose.Schema(
+  {
+    /* ===== BUSINESS INFO ===== */
+    businessName: {
+      type: String,
+      trim: true,
+    },
 
-  razorpayKeyId: {
-    type: String,
-    required: true,
-  },
+    paymentNote: {
+      type: String,
+      trim: true,
+      maxlength: 150,
+    },
 
-  razorpayKeySecret: {
-    type: String,
-    required: true,
-  },
+    /* ===== UPI ===== */
+    upiId: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
 
-  currency: {
-    type: String,
-    default: "INR",
-  },
+    upiName: {
+      type: String,
+      trim: true,
+    },
 
-  isLive: {
-    type: Boolean,
-    default: false, // test / live
-  },
+    showUpi: {
+      type: Boolean,
+      default: true,
+    },
 
-  isActive: {
-    type: Boolean,
-    default: true,
+    /* ===== QR ===== */
+    qrImage: {
+      url: String,
+      public_id: String,
+    },
+
+    showQr: {
+      type: Boolean,
+      default: true,
+    },
+
+    /* ===== RAZORPAY ===== */
+    razorpayKeyId: {
+      type: String,
+      select: false,
+    },
+
+    razorpayKeySecret: {
+      type: String,
+      select: false,
+    },
+
+    razorpayEnabled: {
+      type: Boolean,
+      default: false,
+    },
+
+    /* ===== STATUS ===== */
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 export default mongoose.model(
-  "PaymentSettings",
-  PaymentSettingsSchema
+  "SuperAdminPaymentSettings",
+  superAdminPaymentSettingsSchema
 );

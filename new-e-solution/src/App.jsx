@@ -295,7 +295,8 @@ import SuperAdminAllEnquiries from "./superadmin/SuperAdminAllEnquiries";
 import SuperAdminFeedbacksEditor from "./superadmin/SuperAdminFeedbacksEditor";
 import SuperAdminContactEditor from "./superadmin/SuperAdminContactEditor";
 import SuperAdminFooterEditor from "./superadmin/SuperAdminFooterEditor";
-import SuperAdminPaymentEditor from "./superadmin/SuperAdminPaymentEditor";
+// import SuperAdminPaymentEditor from "./superadmin/SuperAdminPaymentEditor";
+// import SuperAdminPayment from "./superadmin/SuperAdminPayment";
 
 
 function RouteWrapper({ children }) {

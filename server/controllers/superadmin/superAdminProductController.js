@@ -162,10 +162,7 @@ import sanitizeHtml from "sanitize-html";
 import validator from "validator";
 import fs from "fs";
 
-/* =====================================================
-   🛡 SANITIZE (ADD PRODUCT)
-   👉 required fields enforced
-===================================================== */
+
 const sanitizeProductCreate = (data = {}) => {
   const clean = {
     name: sanitizeHtml(data.name || "").trim(),
@@ -187,10 +184,7 @@ const sanitizeProductCreate = (data = {}) => {
   return clean;
 };
 
-/* =====================================================
-   🛡 SANITIZE (UPDATE PRODUCT)
-   👉 only update sent fields (NO EMPTY STRING BUG)
-===================================================== */
+
 const sanitizeProductUpdate = (data = {}) => {
   const clean = {};
 
