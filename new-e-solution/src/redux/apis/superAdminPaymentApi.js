@@ -1,47 +1,65 @@
-// // ✅ REQUIRED IMPORTS
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export const superAdminPaymentApi = createApi({
+  reducerPath: "superAdminPaymentApi",
 
-// export const superAdminPaymentApi = createApi({
-//   reducerPath: "superAdminPaymentApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_BACKEND_URL
+      ? import.meta.env.VITE_BACKEND_URL + "/api/superadminpayment"
+      : "/api/superadminpayment",
+    credentials: "include",
+  }),
 
-//   baseQuery: fetchBaseQuery({
-//        baseUrl: import.meta.env.VITE_BACKEND_URL
-//      ?(import.meta.env.VITE_BACKEND_URL + "/api/payment") 
-//      : "/api/payment",
-//     credentials: "include",
-//   }),
+  tagTypes: ["SuperAdminPayment"],
 
-//   tagTypes: ["Payment"],
+  endpoints: (builder) => ({
+    /* 🔐 SUPERADMIN */
+    getSuperAdminPayment: builder.query({
+      query: () => "/",
+      providesTags: ["SuperAdminPayment"],
+    }),
 
-//   endpoints: (builder) => ({
-//     /* ================= PUBLIC ================= */
-//     createOrder: builder.mutation({
-//       query: (body) => ({
-//         url: "/create-order",
-//         method: "POST",
-//         body,
-//       }),
-//     }),
+    upsertSuperAdminPayment: builder.mutation({
+      query: (formData) => ({
+        url: "/",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["SuperAdminPayment"],
+    }),
 
-//     verifyPayment: builder.mutation({
-//       query: (body) => ({
-//         url: "/verify",
-//         method: "POST",
-//         body,
-//       }),
-//     }),
+    getAllSuperAdminPayments: builder.query({
+      query: () => "/all",
+    }),
 
-//     /* ================= SUPERADMIN ================= */
-//     getAllPayments: builder.query({
-//       query: () => "/all",
-//       providesTags: ["Payment"],
-//     }),
-//   }),
-// });
+    /* 🌍 PUBLIC */
+    getSuperAdminPublicPayment: builder.query({
+      query: () => "/public",
+    }),
 
-// export const {
-//   useCreateOrderMutation,
-//   useVerifyPaymentMutation,
-//   useGetAllPaymentsQuery,
-// } = superAdminPaymentApi;
+    createOrder: builder.mutation({
+      query: (data) => ({
+        url: "/create-order",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    verifyPayment: builder.mutation({
+      query: (data) => ({
+        url: "/verify",
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
+
+export const {
+  useGetSuperAdminPaymentQuery,
+  useUpsertSuperAdminPaymentMutation,
+  useGetAllSuperAdminPaymentsQuery,
+  useGetSuperAdminPublicPaymentQuery,
+  useCreateOrderMutation,
+  useVerifyPaymentMutation,
+} = superAdminPaymentApi;

@@ -30,7 +30,7 @@ export default function SuperAdminContact() {
       name: "",
       email: "",
       phone: "",
-      service: services[0]?.title || "", // ✅ auto-select first service
+      service: services[0]?.title || "", 
       message: "",
     },
     validationSchema,
@@ -210,90 +210,3 @@ function Textarea({ label, name, placeholder, formik }) {
 
 
 
-
-
-
-// import { motion } from "framer-motion";
-// import { useNavigate } from "react-router-dom";
-// import { CheckCircle, Headphones, ShieldCheck, Zap, Phone } from "lucide-react";
-
-// export default function SuperAdminHero() {
-//   const navigate = useNavigate();
-
-//   return (
-//     <section className="pt-32 pb-24 bg-gradient-to-b from-white to-gray-50">
-//       <div className="max-w-7xl mx-auto px-4 text-center">
-        
-//         {/* Title */}
-//         <motion.h1
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6 }}
-//           className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight"
-//         >
-//           Smart IT Solutions for Modern Businesses
-//         </motion.h1>
-
-//         {/* Subtitle */}
-//         <motion.p
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 0.2, duration: 0.6 }}
-//           className="text-gray-600 mt-4 max-w-2xl mx-auto"
-//         >
-//           Streamline your business operations with powerful digital tools and expert support.
-//         </motion.p>
-
-//         {/* CTA Buttons */}
-//         <div className="flex justify-center gap-4 mt-8 flex-wrap">
-//           <motion.button
-//             whileHover={{ scale: 1.04 }}
-//             onClick={() => navigate("/contact")}
-//             className="px-8 py-3 bg-emerald-700 text-white rounded-xl 
-//             shadow-md hover:bg-emerald-800 font-semibold"
-//           >
-//             Contact Us
-//           </motion.button>
-
-//           <motion.button
-//             whileHover={{ scale: 1.04 }}
-//             onClick={() => navigate("/products")}
-//             className="px-8 py-3 bg-white border border-emerald-700 text-emerald-700 rounded-xl 
-//             shadow-sm hover:bg-emerald-50 font-semibold"
-//           >
-//             View Products
-//           </motion.button>
-//         </div>
-
-//         {/* Highlight Badges */}
-//         <motion.div
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 0.4 }}
-//           className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-14 text-left"
-//         >
-//           {[
-//             { icon: <ShieldCheck />, text: "Secure & Trusted" },
-//             { icon: <Zap />, text: "Fast Implementation" },
-//             { icon: <CheckCircle />, text: "100% Customer Support" },
-//             { icon: <Headphones />, text: "24×7 Service" },
-//           ].map((item, i) => (
-//             <div key={i} className="flex items-center gap-2 justify-center">
-//               <span className="text-emerald-700">{item.icon}</span>
-//               <p className="text-gray-700 text-sm font-medium">{item.text}</p>
-//             </div>
-//           ))}
-//         </motion.div>
-//       </div>
-
-//       {/* Floating Call Button */}
-//       <a
-//         href="tel:+919999999999"
-//         className="fixed bottom-6 right-6 bg-emerald-700 text-white p-4 rounded-full shadow-lg 
-//         hover:bg-emerald-800 transition-all"
-//       >
-//         <Phone size={22} />
-//       </a>
-//     </section>
-//   );
-// }

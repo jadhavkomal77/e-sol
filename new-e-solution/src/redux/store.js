@@ -21,12 +21,11 @@ import { superAdminAboutApi } from "./apis/superAdminAboutApi";
 import { superAdminServicesApi } from "./apis/superAdminServicesApi";
 import { superAdminProductApi } from "./apis/superAdminProductApi";
 import { superAdminEnquiryApi } from "./apis/superAdminEnquiryApi";
-// import { superAdminPaymentApi } from "./apis/superAdminPaymentApi";
+import { superAdminPaymentApi } from "./apis/superAdminPaymentApi";
 import { superAdminFeedbackApi } from "./apis/superAdminFeedbackApi";
 import { superAdminContactApi } from "./apis/superAdminContactApi";
 import { superAdminFooterApi } from "./apis/superAdminFooterApi";
 import { superAdminNavbarApi } from "./apis/superAdminNavbarApi";
-// import { superAdminPaymentSettingsApi } from "./apis/superAdminPaymentSettingsApi";
 // import { servicesApi } from "./apis/servicesApi";
 
 const store = configureStore({
@@ -53,13 +52,12 @@ const store = configureStore({
          [superAdminServicesApi.reducerPath]: superAdminServicesApi.reducer,
          [superAdminProductApi.reducerPath]: superAdminProductApi.reducer,
          [superAdminEnquiryApi.reducerPath]: superAdminEnquiryApi.reducer,
-        //  [superAdminPaymentApi.reducerPath]: superAdminPaymentApi.reducer,
+         [superAdminPaymentApi.reducerPath]: superAdminPaymentApi.reducer,
          [superAdminFeedbackApi.reducerPath]: superAdminFeedbackApi.reducer,
          [superAdminContactApi.reducerPath]: superAdminContactApi.reducer,
          [superAdminFooterApi.reducerPath]: superAdminFooterApi.reducer,
          [superAdminNavbarApi.reducerPath]: superAdminNavbarApi.reducer,
          [superAdminNavbarApi.reducerPath]: superAdminNavbarApi.reducer,
-        //  [superAdminPaymentSettingsApi.reducerPath]: superAdminPaymentSettingsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(adminApi.middleware,contactApi.middleware,
@@ -81,12 +79,12 @@ const store = configureStore({
       superAdminServicesApi.middleware,
       superAdminProductApi.middleware,
       superAdminEnquiryApi.middleware,
-      // superAdminPaymentApi.middleware,
+      superAdminPaymentApi.middleware,
       superAdminFeedbackApi.middleware,
       superAdminContactApi.middleware,
       superAdminFooterApi.middleware,
       superAdminNavbarApi.middleware,
-      // superAdminPaymentSettingsApi.middleware,
+
     
     ),
 });

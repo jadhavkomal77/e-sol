@@ -295,7 +295,8 @@ import SuperAdminAllEnquiries from "./superadmin/SuperAdminAllEnquiries";
 import SuperAdminFeedbacksEditor from "./superadmin/SuperAdminFeedbacksEditor";
 import SuperAdminContactEditor from "./superadmin/SuperAdminContactEditor";
 import SuperAdminFooterEditor from "./superadmin/SuperAdminFooterEditor";
-// import SuperAdminPaymentEditor from "./superadmin/SuperAdminPaymentEditor";
+import SuperAdminPaymentEditor from "./superadmin/SuperAdminPaymentEditor";
+
 // import SuperAdminPayment from "./superadmin/SuperAdminPayment";
 
 
@@ -362,7 +363,7 @@ const SuperAdminAbout = lazy(() => import("./superadmin/SuperAdminAbout"));
 const SuperAdminServices = lazy(() => import("./superadmin/SuperAdminServices"));
 const SuperAdminProductsPublic = lazy(() => import("./superadmin/SuperAdminProductsPublic"));
 const SuperAdminPublicFeedback = lazy(() => import("./superadmin/SuperAdminPublicFeedback"));
-// const SuperAdminPayment = lazy(() => import("./superadmin/superAdminPayment"));
+const SuperAdminPayment = lazy(() => import("./superadmin/SuperAdminPayment"));
 const SuperAdminContact = lazy(() => import("./superadmin/SuperAdminContact"));
 const SuperAdminServiceDetail = lazy(() => import("./superadmin/SuperAdminServiceDetail"));
 const SuperAdminEnquiry = lazy(() => import("./superadmin/SuperAdminEnquiry"));
@@ -405,7 +406,7 @@ function AppContent() {
                   <SuperAdminServices />
                   <SuperAdminProductsPublic />
                   <SuperAdminPublicFeedback />
-                  {/* <SuperAdminPayment /> */}
+                  <SuperAdminPayment />
                   <SuperAdminContact />
                 </>
               </RouteWrapper>
@@ -454,7 +455,7 @@ function AppContent() {
           <Route path="superadminfeedback" element={<SuperAdminFeedbacksEditor />} />
           <Route path="superadmincontacts" element={<SuperAdminContactEditor />} />
           <Route path="superadminfooter" element={<SuperAdminFooterEditor />} />
-          {/* <Route path="superadminpayment" element={<SuperAdminPaymentEditor />} /> */}
+          <Route path="superadminpayment" element={<SuperAdminPaymentEditor />} />
           <Route path="alladmins" element={<AdminList />} />
           <Route path="createadmin" element={<CreateAdmin />} />
           <Route path="edit-admin/:id" element={<EditAdmin />} />

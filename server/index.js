@@ -35,7 +35,7 @@ import superAdminFeedbackRoutes from "./routes/superadmin/superAdminFeedbackRout
 import superAdminFooterRoutes from "./routes/superadmin/superAdminFooterRoutes.js";
 import superAdminNavbarRoutes from "./routes/superadmin/superAdminNavbarRoutes.js";
 import superAdminPaymentRoutes from "./routes/superadmin/superAdminPaymentRoutes.js";
-import superAdminPaymentSettingRoutes from "./routes/superadmin/superadminpaymentSettingsRoutes.js";
+import SuperAdminContactRoutes from "./routes/superadmin/SuperAdminContactRoutes.js";
 
 
 
@@ -49,7 +49,8 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://e-solution-website.vercel.app"]
+        // ? ["https://e-solution-website.vercel.app"]
+        ? ["https://e-sol.vercel.app"]
         : "http://localhost:5173",
     credentials: true,
   })
@@ -78,25 +79,38 @@ app.use("/api/superadminproducts", superAdminProductRoutes);
 app.use("/api/superadminenquiry", superAdminEnquiryRoutes);
 app.use("/api/superadminfeedback", superAdminFeedbackRoutes);
 app.use("/api/superadminfooter", superAdminFooterRoutes);
-// app.use("/api/superadminpayment", superAdminPaymentRoutes);
-// app.use("/api/superadminpaymentsetting",superAdminPaymentSettingRoutes);
+app.use("/api/superadminpayment", superAdminPaymentRoutes);
+app.use("/api/superadmincontact", SuperAdminContactRoutes);
 
 // app.use(express.static("upload"))
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname,"new-e-solution", "dist","index.html")));
 
-  app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
+//   app.get(/^(?!\/api).*/, (req, res) => {
+//     res.sendFile(path.join(__dirname,"new-e-solution", "dist", "index.html"));
+//   });
+// }
+
+if (process.env.NODE_ENV === "production") {
+  app.use(
+    express.static(path.join(__dirname, "new-e-solution", "dist"))
+  );
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "new-e-solution", "dist", "index.html")
+    );
   });
 }
-app.use((req,res) =>{
-res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
-})
-app.use((err, req, res, next) => {
-  console.error("❌ ERROR:", err);
-  res.status(500).json({ message: "Server Error" });
-});
+
+// app.use((req,res) =>{
+// res.sendFile(path.join(__dirname, "new-e-solution","dist", "index.html"));
+// })
+// app.use((err, req, res, next) => {
+//   console.error("❌ ERROR:", err);
+//   res.status(500).json({ message: "Server Error" });
+// });
 
 /* =======================
    SERVER + DB

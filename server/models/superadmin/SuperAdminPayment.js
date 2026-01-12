@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const superAdminSchema = new mongoose.Schema(
+const superAdminPaymentSchema = new mongoose.Schema(
   {
     /* ===== BUSINESS INFO ===== */
     businessName: {
@@ -69,5 +69,5 @@ const superAdminSchema = new mongoose.Schema(
 
 export default mongoose.model(
   "SuperAdminPayment",
-  superAdminSchema
+  superAdminPaymentSchema
 );

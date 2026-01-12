@@ -1,104 +1,163 @@
+import { Share2, Download, Copy, ShieldCheck } from "lucide-react";
+import { toast } from "react-toastify";
+import {
+  useGetSuperAdminPublicPaymentQuery,
+} from "../redux/apis/superAdminPaymentApi";
 
+export default function SuperAdminPayment() {
+  const { data, isLoading, isError } =
+    useGetSuperAdminPublicPaymentQuery();
 
-// import { CreditCard, ShieldCheck } from "lucide-react";
-// import { toast } from "react-toastify";
-// import {
-//   useCreateOrderMutation,
-//   useVerifyPaymentMutation,
-// } from "../redux/apis/superAdminPaymentApi";
-// import { useGetPublicNavbarQuery } from "../redux/apis/superAdminNavbarApi";
-// import { useGetPublicPaymentQuery } from "../redux/apis/superAdminPaymentSettingsApi";
+  const payment = data?.payment;
+  const paymentUrl = window.location.href;
 
+  /* ================= ACTIONS ================= */
+  const copyLink = async () => {
+    await navigator.clipboard.writeText(paymentUrl);
+    toast.success("Payment link copied");
+  };
 
+  const shareLink = async () => {
+    if (navigator.share) {
+      await navigator.share({
+        title: "Secure Payment",
+        text: "Scan & Pay securely",
+        url: paymentUrl,
+      });
+    } else {
+      copyLink();
+    }
+  };
 
-// export default function SuperAdminPayment() {
-//   const [createOrder] = useCreateOrderMutation();
-//   const [verifyPayment] = useVerifyPaymentMutation();
+  const shareWhatsApp = () => {
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(paymentUrl)}`,
+      "_blank"
+    );
+  };
 
-//   const { data: navbarData } = useGetPublicNavbarQuery();
-//   const { data: paymentData } = useGetPublicPaymentQuery();
+  const downloadQR = async () => {
+    const res = await fetch(payment.qrImage.url);
+    const blob = await res.blob();
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "payment-qr.png";
+    link.click();
+  };
 
-//   const navbar = navbarData?.navbar;
-//   const payment = paymentData?.payment;
+  /* ================= STATES ================= */
+  if (isLoading) {
+    return (
+      <div className="min-h-screen grid place-items-center text-gray-500">
+        Loading secure payment…
+      </div>
+    );
+  }
 
-//   const handlePayment = async () => {
-//     try {
-//       if (!payment?.amount) {
-//         toast.error("Payment not configured")
-//         return;
-//       }
+  if (isError || !payment || !payment.isActive) {
+    return (
+      <div className="min-h-screen grid place-items-center text-red-500">
+        Payment information not available
+      </div>
+    );
+  }
 
-//       const res = await createOrder({
-//         amount: payment.amount,
-//         purpose: payment.title,
-//         customer: {
-//           name: "Guest",
-//           email: "",
-//           phone: "",
-//         },
-//       }).unwrap();
+  /* ================= UI ================= */
+  return (
+    <section id="payment" className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-slate-200 flex items-center justify-center px-4 py-14">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur rounded-3xl shadow-2xl border border-gray-200 p-8 space-y-6">
 
-//       const options = {
-//         key: res.key,
-//         order_id: res.orderId,
-//         currency: res.currency,
-//         name: navbar?.brandName || "Company",
-//         description: payment.title,
-//         handler: async (response) => {
-//           await verifyPayment({
-//             orderId: res.orderId,
-//             paymentId: response.razorpay_payment_id,
-//             signature: response.razorpay_signature,
-//           }).unwrap();
+        {/* HEADER */}
+        <div className="text-center space-y-1">
+          <h1 className="text-2xl font-semibold text-gray-900">
+            Scan & Pay
+          </h1>
 
-//           toast.success("Payment Successful 🎉");
-//         },
-//         theme: { color: "#2563EB" },
-//       };
+          {payment.businessName && (
+            <p className="text-sm text-gray-600">
+              Paying to <b>{payment.businessName}</b>
+            </p>
+          )}
+        </div>
 
-//       new window.Razorpay(options).open();
-//     } catch {
-//       toast.error("Payment failed, try again");
-//     }
-//   }
+        {/* SECURITY BADGE */}
+        <div className="flex justify-center">
+          <div className="flex items-center gap-2 text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full">
+            <ShieldCheck size={14} />
+            Secure Payment
+          </div>
+        </div>
 
-//   return (
-//     <section  id="payemnt" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
-//       <div className="bg-white rounded-3xl shadow-xl p-10 max-w-md w-full text-center">
-//         <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-blue-100 flex items-center justify-center">
-//           <CreditCard className="w-8 h-8 text-blue-600" />
-//         </div>
+        {/* QR */}
+        {payment.showQr && payment.qrImage?.url && (
+          <div className="flex justify-center">
+            <div className="p-4 rounded-2xl bg-gradient-to-b from-gray-50 to-gray-100 border shadow-inner">
+              <img
+                src={payment.qrImage.url}
+                alt="Payment QR"
+                className="w-64 h-64 object-contain"
+              />
+            </div>
+          </div>
+        )}
 
-//         <h2 className="text-3xl font-bold mb-2">Secure Payment</h2>
-//         <p className="text-slate-600 mb-6">
-//           Pay securely using Razorpay
-//         </p>
+        {/* UPI */}
+        {payment.showUpi && (
+          <div className="bg-gray-50 rounded-xl border px-4 py-3 text-sm text-gray-700 space-y-1">
+            <p><b>UPI Name:</b> {payment.upiName}</p>
+            <p><b>UPI ID:</b> {payment.upiId}</p>
+          </div>
+        )}
 
-//         <div className="bg-slate-50 rounded-xl p-4 mb-6">
-//           <p className="text-sm text-slate-500">Amount</p>
-//           <p className="text-3xl font-bold text-blue-600">
-//             ₹{payment?.amount || "--"}
-//           </p>
-//         </div>
+        {/* NOTE */}
+        {payment.paymentNote && (
+          <p className="text-xs text-gray-500 text-center">
+            {payment.paymentNote}
+          </p>
+        )}
 
-//         <button
-//           onClick={handlePayment}
-//           className="w-full py-4 rounded-xl text-white font-semibold bg-gradient-to-r from-blue-600 to-indigo-600"
-//         >
-//           Pay Now
-//         </button>
+        {/* LINK */}
+        <div className="flex items-center rounded-lg border overflow-hidden">
+          <input
+            value={paymentUrl}
+            readOnly
+            className="flex-1 px-3 py-2 text-xs bg-gray-50 outline-none"
+          />
+          <button
+            onClick={copyLink}
+            className="px-3 text-gray-500 hover:text-black"
+          >
+            <Copy size={16} />
+          </button>
+        </div>
 
-//         <div className="flex justify-center gap-2 mt-6 text-sm text-slate-500">
-//           <ShieldCheck className="w-4 h-4 text-green-500" />
-//           100% Secure Payment
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
+        {/* SHARE */}
+        <button
+          onClick={shareLink}
+          className="w-full flex items-center justify-center gap-2 bg-black text-white py-3 rounded-xl text-sm hover:opacity-90"
+        >
+          <Share2 size={16} />
+          Share Payment Link
+        </button>
 
+        {/* ACTIONS */}
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={downloadQR}
+            className="border py-2.5 rounded-xl text-sm hover:bg-gray-100"
+          >
+            Save QR
+          </button>
 
+          <button
+            onClick={shareWhatsApp}
+            className="bg-green-500 text-white py-2.5 rounded-xl text-sm hover:bg-green-600"
+          >
+            WhatsApp
+          </button>
+        </div>
 
-
-
-
+      </div>
+    </section>
+  );
+}
